@@ -9,40 +9,41 @@ void SelectCourse(student a,Course b,Course_Select c)//选课
 {
 	c.SetValue(a.ID_Value(), b.ID_Value());
 }
-//template <class T>
-//bool Find(T *A_T, long num)//寻找课程
-//{
-//	T temp;
-//	while (A_T != NULL)
-//	{
-//		if (A_T->cID_Value() == num)
-//		{
-//			return true;
-//		}
-//		else
-//			A_T = A_T->NEXT;
-//	}
-//	return false;
-//}
-//template <class T>
-//void Add(T *A_T, T * NewT)//增加新课程
-//{
-//	while (A_T->NEXT != NULL)
-//	{
-//		A_T = A_T->NEXT;
-//	}
-//	A_T->NEXT = NewT;
-//	NewT->NEXT = NULL;
-//}
-//template <class T>
-//void Reduce(T *A_T, long num)//减少课程
-//{
-//	T *temp;
-//	while (A_T->NEXT->cID_Value() != num)
-//	{
-//		A_T = A_T->NEXT;
-//	}
-//	temp = A_T->NEXT;
-//	A_T->NEXT = A_T->NEXT->NEXT;
-//	delete temp;
-//}
+void StudentMenu()// 学生菜单
+{
+	cout << "1、选课" << endl
+		 << "2、个人基本信息查询" << endl
+		 << "3、查询考试成绩" << endl
+		 << "4、选课信息查询" << endl
+		 << "5、课程信息查询" << endl
+		 << "6、返回上一级菜单" << endl;
+}
+void TeacherMenu()//教师菜单
+{
+	cout << "1、查询成绩单" << endl
+		 << "2、查询同专业学生" << endl
+		 << "3、查询先行课" << endl
+		 << "4、查询挂科名单" << endl
+		 << "5、返回上一级菜单" << endl;
+}
+void MainMenu()//主界面
+{
+	cout << "	     欢迎进入选课系统！" << endl
+		 << "			1、学生登陆" << endl
+		 << "			2、教师登陆" << endl
+		 << "           0、退出系统" << endl;
+}
+void ListStudent(student *L)
+{
+	ifstream in;
+	in.open("学生.txt");
+	//ofstream out;
+	student *temp = new (student);
+	while (!in.eof())
+	{
+		temp->ReadFile(in);
+		L->AddStudent(temp);
+	}
+	in.close();
+}
+

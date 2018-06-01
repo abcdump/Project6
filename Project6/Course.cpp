@@ -2,6 +2,9 @@
 #include "Course.h"
 #include <fstream>
 using namespace std;
+typedef Course *PtrToNode;
+typedef PtrToNode List;
+typedef PtrToNode Position;
 void Course::Find()//查询
 {
 	cout << "课程号:" <<  CourseID << endl
@@ -24,38 +27,49 @@ void Course::Change()//修改
 	cin >> StudyScore;
 	cout << endl;
 }
-
-//bool FindCourse(Course *A_Course, long num)//寻找课程
-//{
-//	Course temp;
-//	while (A_Course != NULL)
-//	{
-//		if (A_Course->cID_Value() == num)
-//		{
-//			return true;
-//		}
-//		else
-//			A_Course = A_Course->NEXT;
-//	}
-//	return false;
-//}
-//void AddCourse(Course *A_Course, Course * NewCourse)//增加新课程
-//{
-//	while (A_Course->NEXT != NULL)
-//	{
-//		A_Course = A_Course->NEXT;
-//	}
-//	A_Course->NEXT = NewCourse;
-//	NewCourse->NEXT = NULL;
-//}
-//void ReduceCourse(Course *A_Course, long num)//减少课程
-//{
-//	Course *temp;
-//	while (A_Course->NEXT->cID_Value() != num)
-//	{
-//		A_Course = A_Course->NEXT;
-//	}
-//	temp = A_Course->NEXT;
-//	A_Course->NEXT = A_Course->NEXT->NEXT;
-//	delete temp;
-//}
+Course *Course::FindCourse( long num)//寻找课程
+{
+	Position P;
+	P = this->NEXT;
+	while (P != NULL&& P->ID_Value() != num)
+	{
+		P = P->NEXT;
+	}
+	return P;
+}//如果查找失败返回NULL
+void Course::AddCourse(Course * NewCourse)//增加新课程
+{
+	Position P;
+	P = this;
+	while (P->NEXT != NULL)
+	{
+		P = P->NEXT;
+	}
+	P->NEXT = NewCourse;
+	NewCourse->NEXT = NULL;
+}
+bool Course::IsEmpty()
+{
+	return this->NEXT == nullptr;
+}
+void Course::ReduceCourse(long num)//减少课程
+{
+	if (!this->IsEmpty())
+	{
+		Position P;
+		Position temp;
+		P = this;
+		while (P->NEXT->ID_Value() != num)
+		{
+			P = P->NEXT;
+		}
+		if (!P->IsEmpty())
+		{
+			temp = P->NEXT;
+			P->NEXT = P->NEXT->NEXT;
+			delete temp;
+		}
+		else cout << "没找到这门课程！" << endl;
+	}
+	else cout << "已经没有课程可以删除了!" << endl;
+}

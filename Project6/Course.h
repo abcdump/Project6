@@ -19,6 +19,11 @@ public:
 	//写文件
 	Course(long a=0, string b = "0", long c = 0 , double d = 0) :CourseID(a), CourseName(b),
 	 CourseID_Front(c),StudyScore(d) {	}//构造函数
+
+	Course *  FindCourse( long num);//查询
+	void AddCourse(Course * NewCourse);//添加
+	bool IsEmpty();//判断是否为空或最后一个
+	void ReduceCourse(long num);//减少课程
 	void Find();//查询
 	void Change();//修改
 	~Course()
